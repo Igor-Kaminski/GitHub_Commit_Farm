@@ -39,6 +39,13 @@ python3 commit_farm.py
 ```
 You should see logs and it will idle until the first scheduled commit time.
 
+### One-off immediate commit
+Run this to make a single commit immediately and exit:
+```bash
+python3 commit_farm.py --now
+```
+This does not alter the rest of today's scheduled commits.
+
 ### Run as a systemd user service
 1. Copy the provided unit file:
 ```bash

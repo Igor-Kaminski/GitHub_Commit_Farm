@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 import sys
 import time
@@ -271,11 +272,26 @@ def perform_commit(repo_path: str, commit_file: str, commit_message_template: st
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="GitHub Commit Farm daemon")
+    parser.add_argument("--now", action="store_true", help="Perform one immediate commit and exit")
+    args = parser.parse_args()
+
     config = read_config()
     repo_path = config["repo_path"]
 
     ensure_git_repo(repo_path)
     maybe_set_git_identity(repo_path, config["git_user_name"], config["git_user_email"])
+
+    if args.now:
+        append_activity_line(repo_path, config["commit_file"])
+        perform_commit(
+            repo_path,
+            config["commit_file"],
+            config["commit_message_template"],
+            config["git_push"],
+        )
+        log("Immediate commit completed.")
+        return
 
     killer = GracefulKiller()
 
