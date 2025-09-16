@@ -1,0 +1,21 @@
+[Unit]
+Description=GitHub Commit Farm Daemon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/Scripts/GitHub_Commit_Farm/.env
+WorkingDirectory=%h/Scripts/GitHub_Commit_Farm
+ExecStart=/usr/bin/env python3 %h/Scripts/GitHub_Commit_Farm/commit_farm.py
+Restart=on-failure
+RestartSec=15s
+
+# Hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+ProtectHome=no
+
+[Install]
+WantedBy=default.target 

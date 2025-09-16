@@ -109,13 +109,19 @@ def read_config() -> dict:
 
 def run_git_command(args: List[str], cwd: str, allow_fail: bool = False) -> Tuple[int, str, str]:
     try:
+        env = os.environ.copy()
+        # Prevent any interactive password/username prompts that could hang the process
+        env["GIT_TERMINAL_PROMPT"] = "0"
+        env["GIT_ASKPASS"] = "true"
         proc = subprocess.run(
             ["git", *args],
             cwd=cwd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            stdin=subprocess.DEVNULL,
             text=True,
             check=False,
+            env=env,
         )
         if proc.returncode != 0 and not allow_fail:
             log(f"git {' '.join(args)} failed: {proc.stderr.strip()}")
