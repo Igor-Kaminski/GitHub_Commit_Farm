@@ -15,6 +15,7 @@ from typing import List, Optional, Tuple
 STATE_FILE_NAME = "state.json"
 DEFAULT_COMMIT_FILE = "farm_activity.md"
 MAX_RETRY_ATTEMPTS = 3
+DEFAULT_SLEEP_INTERVAL = 60
 
 
 class GracefulKiller:
