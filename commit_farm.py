@@ -14,6 +14,7 @@ from typing import List, Optional, Tuple
 
 STATE_FILE_NAME = "state.json"
 DEFAULT_COMMIT_FILE = "farm_activity.md"
+MAX_RETRY_ATTEMPTS = 3
 
 
 class GracefulKiller:
